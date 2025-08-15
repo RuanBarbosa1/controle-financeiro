@@ -24,3 +24,8 @@ git clone https://github.com/RuanBarbosa1/controle-financeiro.git
 cd controle-financeiro
 npm install
 expo start
+=======
+#Controle Financeiro 
+
+#App para controle de gastos
+
