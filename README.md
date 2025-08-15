@@ -1,18 +1,26 @@
-# Controle Financeiro
+# 💰 Controle Financeiro
 
-Este é um aplicativo de controle financeiro desenvolvido com Expo e React Native.
+Este é um aplicativo de controle financeiro desenvolvido com **Expo** e **React Native**.
 
-## Funcionalidades
+## ✨ Funcionalidades
 
-- Cadastro de receitas e despesas
-- Visualização de saldo atual
-- Filtros por data e categoria
-- Interface amigável e responsiva
+- ✅ Cadastro de receitas e despesas  
+- 📊 Visualização de saldo atual  
+- 📅 Filtros por data e categoria  
+- 📱 Interface amigável e responsiva  
 
-## Tecnologias utilizadas
+## 🛠 Tecnologias Utilizadas
 
-- React Native
-- Expo
-- JavaScript
-- Firebase
-- Github
+- React Native  
+- Expo  
+- JavaScript  
+- Firebase  
+- GitHub  
+
+## 📦 Instalação
+
+```bash
+git clone https://github.com/RuanBarbosa1/controle-financeiro.git
+cd controle-financeiro
+npm install
+expo start
