@@ -76,7 +76,6 @@ export default function GraficosFinanceiros({ porCategoria, entradaSaida, resumo
     if (Platform.OS === 'web') {
       const blob = new Blob([csv], {
         type: 'text/csv;charset=utf-8;',
-        lastModified: new Date().getTime(),
       });
       FileSaver.saveAs(blob, 'resumo_mensal.csv');
     } else if (RNFS && Share) {
@@ -110,7 +109,6 @@ export default function GraficosFinanceiros({ porCategoria, entradaSaida, resumo
       const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
       const blob = new Blob([wbout], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        lastModified: new Date().getTime(),
       });
       FileSaver.saveAs(blob, 'resumo_mensal.xlsx');
     } else if (RNFS && Share) {

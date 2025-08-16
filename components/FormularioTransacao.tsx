@@ -1,86 +1,74 @@
-import { Picker } from '@react-native-picker/picker';
-import { StyleSheet, View } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
+import React from 'react';
+import { View } from 'react-native';
+import { Button, RadioButton, TextInput } from 'react-native-paper';
 
-type Props = {
+interface FormularioTransacaoProps {
   descricao: string;
-  setDescricao: (v: string) => void;
+  setDescricao: React.Dispatch<React.SetStateAction<string>>;
   valor: string;
-  setValor: (v: string) => void;
+  setValor: React.Dispatch<React.SetStateAction<string>>;
   categoria: string;
-  setCategoria: (v: string) => void;
+  setCategoria: React.Dispatch<React.SetStateAction<string>>;
   tipo: 'entrada' | 'saida';
-  setTipo: (v: 'entrada' | 'saida') => void;
+  setTipo: React.Dispatch<React.SetStateAction<'entrada' | 'saida'>>;
   categorias: string[];
   onSubmit: () => void;
   saving: boolean;
-};
+}
 
 export default function FormularioTransacao({
-  descricao, setDescricao,
-  valor, setValor,
-  categoria, setCategoria,
-  tipo, setTipo,
-  categorias, onSubmit,
-  saving
-}: Props) {
+  descricao,
+  setDescricao,
+  valor,
+  setValor,
+  categoria,
+  setCategoria,
+  tipo,
+  setTipo,
+  categorias,
+  onSubmit,
+  saving,
+}: FormularioTransacaoProps) {
   return (
-    <View style={styles.form}>
+    <View>
       <TextInput
         label="Descrição"
         value={descricao}
         onChangeText={setDescricao}
-        style={styles.input}
+        mode="outlined"
+        style={{ marginBottom: 10 }}
       />
       <TextInput
         label="Valor"
         value={valor}
         onChangeText={setValor}
         keyboardType="numeric"
-        style={styles.input}
+        mode="outlined"
+        style={{ marginBottom: 10 }}
       />
-
-      <Picker
-        selectedValue={categoria}
-        onValueChange={(itemValue) => setCategoria(itemValue)}
-        style={styles.picker}
-      >
+      {/* Categoria */}
+      <RadioButton.Group onValueChange={setCategoria} value={categoria}>
         {categorias.map((cat) => (
-          <Picker.Item key={cat} label={cat} value={cat} />
+          <RadioButton.Item key={cat} label={cat} value={cat} />
         ))}
-      </Picker>
-
-      <Picker
-        selectedValue={tipo}
-        onValueChange={(itemValue) => setTipo(itemValue)}
-        style={styles.picker}
+      </RadioButton.Group>
+      {/* Tipo */}
+      <RadioButton.Group
+        onValueChange={(value) => setTipo(value as 'entrada' | 'saida')}
+        value={tipo}
       >
-        <Picker.Item label="Entrada" value="entrada" />
-        <Picker.Item label="Saída" value="saida" />
-      </Picker>
+        <RadioButton.Item label="Entrada" value="entrada" />
+        <RadioButton.Item label="Saída" value="saida" />
+      </RadioButton.Group>
 
       <Button
         mode="contained"
         onPress={onSubmit}
-        style={{ marginVertical: 10 }}
         loading={saving}
+        style={{ marginTop: 10 }}
       >
-        Adicionar
+        Adicionar Transação
       </Button>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  form: {
-    width: '100%',
-  },
-  input: {
-    width: '100%',
-    marginVertical: 5,
-  },
-  picker: {
-    width: '100%',
-    marginVertical: 5,
-  },
-});
