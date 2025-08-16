@@ -1,4 +1,3 @@
-
 import Papa from 'papaparse';
 import { Alert, Dimensions, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { BarChart, PieChart } from 'react-native-chart-kit';
@@ -10,8 +9,15 @@ let Share: any = null;
 let FileSaver: any = null;
 
 if (Platform.OS !== 'web') {
-  RNFS = require('react-native-fs');
-  Share = require('react-native-share');
+  try {
+    RNFS = require('react-native-fs');
+    Share = require('react-native-share');
+  } catch (error) {
+    console.error('Erro ao carregar módulos nativos:', error);
+    Alert.alert('Erro', 'Não foi possível carregar os módulos nativos necessários.');
+    RNFS = null;
+    Share = null;
+  }
 } else {
   FileSaver = require('file-saver');
 }
@@ -68,9 +74,12 @@ export default function GraficosFinanceiros({ porCategoria, entradaSaida, resumo
     const csv = Papa.unparse(csvData);
 
     if (Platform.OS === 'web') {
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const blob = new Blob([csv], {
+        type: 'text/csv;charset=utf-8;',
+        lastModified: new Date().getTime(),
+      });
       FileSaver.saveAs(blob, 'resumo_mensal.csv');
-    } else {
+    } else if (RNFS && Share) {
       const path = RNFS.DocumentDirectoryPath + '/resumo_mensal.csv';
       await RNFS.writeFile(path, csv, 'utf8');
       await Share.open({
@@ -101,9 +110,10 @@ export default function GraficosFinanceiros({ porCategoria, entradaSaida, resumo
       const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
       const blob = new Blob([wbout], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        lastModified: new Date().getTime(),
       });
       FileSaver.saveAs(blob, 'resumo_mensal.xlsx');
-    } else {
+    } else if (RNFS && Share) {
       const wbout = XLSX.write(wb, { type: 'base64', bookType: 'xlsx' });
       const path = RNFS.DocumentDirectoryPath + '/resumo_mensal.xlsx';
       await RNFS.writeFile(path, wbout, 'base64');

@@ -2,8 +2,8 @@ import { addDoc, collection, onSnapshot, orderBy, query } from "firebase/firesto
 import { useEffect, useState } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { Provider as PaperProvider, Title } from 'react-native-paper';
-import { db } from '../config/firebaseConfig';
-import { theme } from '../config/theme';
+import { db } from '../../config/firebaseConfig';
+import { theme } from '../../config/theme';
 
 import FormularioTransacao from '../../components/FormularioTransacao';
 import GraficosFinanceiros from '../../components/GraficosFinanceiros';
@@ -17,7 +17,7 @@ type Transacao = {
   tipo: 'entrada' | 'saida';
 };
 
-export default function App() {
+export default function IndexScreen() {
   const [descricao, setDescricao] = useState('');
   const [valor, setValor] = useState('');
   const [categoria, setCategoria] = useState('Alimentação');
